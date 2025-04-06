@@ -149,6 +149,7 @@ class CinteropModulesTest {
             kotlinCodeFile.writeText(kotlinCode)
         }
 
+        println("testProjectDir=${testProjectDir.absolutePath}")
         GradleRunner.create()
             .withProjectDir(testProjectDir)
             .withArguments("build")

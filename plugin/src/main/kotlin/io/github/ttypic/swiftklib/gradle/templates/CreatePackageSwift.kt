@@ -11,7 +11,7 @@ internal fun createPackageSwiftContents(
         products: [
             .library(
                 name: "$cinteropName",
-                type: .static,
+                type: .dynamic,
                 targets: ["$cinteropName"])
         ],
         dependencies: [],

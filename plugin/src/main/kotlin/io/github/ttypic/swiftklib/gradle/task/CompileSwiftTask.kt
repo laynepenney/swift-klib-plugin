@@ -81,7 +81,7 @@ abstract class CompileSwiftTask @Inject constructor(
         if (swiftBuildDir.exists()) swiftBuildDir.deleteRecursively()
 
         swiftBuildDir.mkdirs()
-        path.copyRecursively(buildDir(), true)
+        path.copyRecursively(swiftBuildDir, true)
     }
 
     private fun buildDir() =
@@ -91,8 +91,18 @@ abstract class CompileSwiftTask @Inject constructor(
      * Creates `Package.Swift` file for the library
      */
     private fun createPackageSwift() {
-        File(swiftBuildDir, "Package.swift")
-            .writeText(createPackageSwiftContents(cinteropName))
+        val existing = File("${pathProperty.get()}", "Package.swift")
+        val dest = File(swiftBuildDir, "Package.swift")
+        if (existing.exists()) {
+//            dest.printWriter().use { writer ->
+//                existing.bufferedReader().lineSequence().forEach {  line ->
+//                    writer.println(line)
+//                }
+//            }
+//            throw IllegalStateException("worked!")
+        } else {
+            dest.writeText(createPackageSwiftContents(cinteropName))
+        }
     }
 
     private fun buildSwift(xcodeVersion: Int): SwiftBuildResult {
@@ -127,7 +137,7 @@ abstract class CompileSwiftTask @Inject constructor(
         val releaseBuildPath = File(swiftBuildDir, ".build/${compileTarget.arch()}-apple-macosx/release")
 
         return SwiftBuildResult(
-            libPath = File(releaseBuildPath, "lib${cinteropName}.a"),
+            libPath = File(releaseBuildPath, "lib${cinteropName}.dylib"),
             headerPath = File(releaseBuildPath, "$cinteropName.build/$cinteropName-Swift.h")
         )
     }
