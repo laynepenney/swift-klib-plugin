@@ -18,8 +18,8 @@ tasks.named<Test>("test") {
     useJUnitPlatform()
 }
 
-version = "0.7.0-SNAPSHOT"
-group = "io.github.ttypic"
+version = "0.7.1-SNAPSHOT"
+group = "pro.layne.ttypic.swiftklib"
 
 kotlin {
     jvmToolchain(17)
@@ -32,7 +32,7 @@ gradlePlugin {
 
     plugins {
         create("swiftklib") {
-            id = "io.github.ttypic.swiftklib"
+            id = "pro.layne.ttypic.swiftklib"
             displayName = "SwiftKlib Gradle Plugin"
             description = "Gradle Plugin to inject Swift-code for Kotlin Multiplatform iOS target"
             implementationClass = "io.github.ttypic.swiftklib.gradle.SwiftKlibPlugin"
